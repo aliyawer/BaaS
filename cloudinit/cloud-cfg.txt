@@ -11,7 +11,7 @@ runcmd:
  - apt-get install -y git 
  - apt-get install -y python3-pip
  - pip install --upgrade pip
+ - pip install flask
  - apt install -y octave
- - git clone https://github.com/aliyawer/BaaS.git
- - cd Baas/BENCHOP/ && octave Table.m
- 
+ - cd home/ubuntu && git clone https://github.com/aliyawer/BaaS.git
+ - cd Baas/frontend/ && python3 app.py
