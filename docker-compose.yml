@@ -1,0 +1,16 @@
+version: "3.8"
+
+services: 
+    rabbit:
+        hostname: admin
+        image: rabbitmq:3-management
+        environment:
+            - RABBITMQ_DEFAULT_USER=admin
+            - RABBITMQ_DEFAULT_PASS=admin
+
+    api:
+        build: ./api
+        depends_on: 
+            - rabbit
+        ports:
+            - 5000:5000
