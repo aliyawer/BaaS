@@ -16,5 +16,5 @@ runcmd:
   - chmod +x /usr/local/bin/docker-compose
   - cd /home/ubuntu
   - git clone https://github.com/aliyawer/BaaS.git
-  - cd Baas/
+  - cd BaaS/
   - docker-compose up --build
