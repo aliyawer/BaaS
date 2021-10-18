@@ -7,7 +7,7 @@ services:
         environment:
             - RABBITMQ_DEFAULT_USER=admin
             - RABBITMQ_DEFAULT_PASS=admin
-
+        
     api:
         build: ./api
         depends_on: 

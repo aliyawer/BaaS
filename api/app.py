@@ -5,7 +5,7 @@ from celery import Celery
 app = Flask(__name__)
 
 celery = Celery('worker',
-                broker="amqp://admin:admin@rabbit",
+                broker="amqp://admin:admin@rabbit:5672//",
                 backend="rpc://")
 
 @app.route('/baas', methods=['GET'])
