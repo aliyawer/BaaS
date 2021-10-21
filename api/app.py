@@ -4,7 +4,6 @@ from celery import Celery
 from oct2py import Oct2Py
 
 
-
 app = Flask(__name__)
 
 celery = Celery('worker',
