@@ -1,5 +1,5 @@
 %% Problem 1 b) I
-function [timeBSeuCallUI,relerrBSeuCallUI] = Table_1b1() 
+function [timeBSamPutUI,relerrBSamPutUI] = Table_1b1() 
     format long
 
     % addpath(genpath('./')); %adds all the functions from subfolders to the path
