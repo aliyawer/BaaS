@@ -40,6 +40,9 @@ if private_net != None:
 else:
     sys.exit("private-net not defined.")
 
+secgroups = ['BaaS-security-group']
+
+'''
 #print("Path at terminal when executing this file")
 #print(os.getcwd() + "\n")
 cfg_file_path = os.getcwd()+'/cloud-cfg.txt'
@@ -47,8 +50,6 @@ if os.path.isfile(cfg_file_path):
     userdata = open(cfg_file_path)
 else:
     sys.exit("cloud-cfg.txt is not in current working directory")
-
-secgroups = ['BaaS-security-group']
 
 print("Creating instance ... ")
 instance = nova.servers.create(name="Baas-master", image=image,
@@ -65,8 +66,9 @@ while inst_status == 'BUILD':
     inst_status = instance.status
 
 print("Instance: " + instance.name + " is in " + inst_status + "state")
+'''
 
-for i in range(0):
+for i in range(2):
     cfg_file_path = os.getcwd()+'/cloud-cfg.txt'
     if os.path.isfile(cfg_file_path):
         userdata = open(cfg_file_path)
@@ -74,7 +76,8 @@ for i in range(0):
         sys.exit("cloud-cfg.txt is not in current working directory")
 
     print("Creating instance ... ")
-    instance = nova.servers.create(name="Baas-worker1", image=image,
+    name = "BaaS-worker" + str(i)
+    instance = nova.servers.create(name=name, image=image,
                                 flavor=flavor, userdata=userdata, key_name="myKey", nics=nics, security_groups=secgroups)
     inst_status = instance.status
     print("waiting for 10 seconds.. ")

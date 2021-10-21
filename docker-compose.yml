@@ -35,3 +35,10 @@ services:
             - rabbit
         ports:
             - 5000:5000
+
+    worker:
+        build: ./worker
+        depends_on: 
+            - rabbit
+        ports:
+            - 5001:5001
