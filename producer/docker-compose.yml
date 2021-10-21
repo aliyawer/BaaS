@@ -1,0 +1,38 @@
+version: "3.8"
+
+services: 
+    rabbit:
+        hostname: admin
+        image: rabbitmq:3-management
+        environment:
+            - RABBITMQ_DEFAULT_USER=admin
+            - RABBITMQ_DEFAULT_PASS=admin
+        ports:
+            - 5672:5672
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: on-failure 
+
+    flower:
+      image: mher/flower:0.9.5
+      environment:
+        - CELERY_BROKER_URL=amqp://admin:admin@rabbit:5672//
+        - FLOWER_PORT=5555
+        - FLOWER_PURGE_OFFLINE_WORKERS=10
+      ports:
+        - 5555:5555
+      links:
+        - rabbit
+      deploy:
+        replicas: 1
+        restart_policy:
+          condition: on-failure
+        
+    producer:
+        build: ./
+        depends_on: 
+            - rabbit
+        ports:
+            - 5000:5000
+            

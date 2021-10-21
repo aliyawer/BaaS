@@ -1,4 +1,0 @@
-flask
-celery
-oct2py
-flower
