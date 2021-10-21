@@ -48,10 +48,10 @@ if os.path.isfile(cfg_file_path):
 else:
     sys.exit("cloud-cfg.txt is not in current working directory")
 
-secgroups = ['default']
+secgroups = ['BaaS-security-group']
 
 print("Creating instance ... ")
-instance = nova.servers.create(name="Baas-Instance", image=image,
+instance = nova.servers.create(name="Baas-master", image=image,
                                flavor=flavor, userdata=userdata, key_name="myKey", nics=nics, security_groups=secgroups)
 inst_status = instance.status
 print("waiting for 10 seconds.. ")
@@ -65,3 +65,26 @@ while inst_status == 'BUILD':
     inst_status = instance.status
 
 print("Instance: " + instance.name + " is in " + inst_status + "state")
+
+for i in range(0):
+    cfg_file_path = os.getcwd()+'/cloud-cfg.txt'
+    if os.path.isfile(cfg_file_path):
+        userdata = open(cfg_file_path)
+    else:
+        sys.exit("cloud-cfg.txt is not in current working directory")
+
+    print("Creating instance ... ")
+    instance = nova.servers.create(name="Baas-worker1", image=image,
+                                flavor=flavor, userdata=userdata, key_name="myKey", nics=nics, security_groups=secgroups)
+    inst_status = instance.status
+    print("waiting for 10 seconds.. ")
+    time.sleep(10)
+
+    while inst_status == 'BUILD':
+        print("Instance: "+instance.name+" is in "+inst_status +
+            " state, sleeping for 5 seconds more...")
+        time.sleep(5)
+        instance = nova.servers.get(instance.id)
+        inst_status = instance.status
+
+    print("Instance: " + instance.name + " is in " + inst_status + "state")

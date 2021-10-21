@@ -7,6 +7,27 @@ services:
         environment:
             - RABBITMQ_DEFAULT_USER=admin
             - RABBITMQ_DEFAULT_PASS=admin
+        ports:
+            - 15672:15672
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: on-failure 
+
+    flower:
+      image: mher/flower:0.9.5
+      environment:
+        - CELERY_BROKER_URL=amqp://admin:admin@rabbit:5672//
+        - FLOWER_PORT=5555
+        - FLOWER_PURGE_OFFLINE_WORKERS=10
+      ports:
+        - 5555:5555
+      links:
+        - rabbit
+      deploy:
+        replicas: 1
+        restart_policy:
+          condition: on-failure
         
     api:
         build: ./api
