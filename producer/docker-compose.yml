@@ -18,7 +18,7 @@ services:
     flower:
       image: mher/flower:0.9.5
       environment:
-        - CELERY_BROKER_URL=amqp://admin:admin@rabbit:5672//
+        - CELERY_BROKER_URL=amqp://admin:admin@rabbit:5672/vhost
         - FLOWER_PORT=5555
         - FLOWER_PURGE_OFFLINE_WORKERS=10
       ports:
@@ -31,7 +31,7 @@ services:
           condition: on-failure
         
     producer:
-        build: ./
+        build: ./api
         depends_on: 
             - rabbit
         ports:

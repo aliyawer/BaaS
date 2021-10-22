@@ -7,7 +7,7 @@ from oct2py import Oct2Py
 app = Flask(__name__)
 
 celery = Celery('worker',
-                broker="amqp://admin:admin@rabbit:5672//vhost",
+                broker="amqp://admin:admin@rabbit:5672//",
                 backend="rpc://")
 
 

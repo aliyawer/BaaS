@@ -8,8 +8,6 @@ services:
             - RABBITMQ_DEFAULT_USER=admin
             - RABBITMQ_DEFAULT_PASS=admin
             - RABBITMQ_DEFAULT_VHOST=vhost
-        ports:
-            - 5672:5672
         deploy:
             replicas: 1
             restart_policy:
