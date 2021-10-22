@@ -31,7 +31,7 @@ services:
           condition: on-failure
         
     producer:
-        build: ./api
+        build: ./
         depends_on: 
             - rabbit
         ports:
