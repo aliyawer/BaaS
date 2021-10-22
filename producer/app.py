@@ -1,7 +1,7 @@
 #!flask/bin/python
-from flask import Flask, jsonify
 from celery import Celery
 from oct2py import Oct2Py
+from flask import Flask
 
 
 app = Flask(__name__)
@@ -21,21 +21,20 @@ def baas_project():
     }
     return res
 
-def flatten_list(the_list):
-    flattened_list = []
-    for sublist in the_list:
-        for subsublist in sublist:
-            flattened_list.append(subsublist)
-    return flattened_list
-
 
 @celery.task(name="app.task_1")
 def task_1():
     oc = Oct2Py()
     oc.addpath('./BENCHOP')
     time, res = oc.Table_1a(nout=2)
-    flat_time = flatten_list(time)
-    flat_res = flatten_list(res)
+    flat_time = []
+    for time_list in time:
+        for sublist in time_list:
+            flat_time.append(sublist)
+    flat_res = []
+    for r in res:
+        for el in r:
+            flat_res.append(el)
 
     result_dict = {
         "flat_time": flat_time,
@@ -43,13 +42,20 @@ def task_1():
     }
     return result_dict
 
+
 @celery.task(name="app.task_2")
 def task_2():
     oc = Oct2Py()
     oc.addpath('./BENCHOP')
     time, res = oc.Table_1b1(nout=2)
-    flat_time = flatten_list(time)
-    flat_res = flatten_list(res)
+    flat_time = []
+    for time_list in time:
+        for sublist in time_list:
+            flat_time.append(sublist)
+    flat_res = []
+    for r in res:
+        for el in r:
+            flat_res.append(el)
 
     result_dict = {
         "flat_time": flat_time,
