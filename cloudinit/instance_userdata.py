@@ -14,7 +14,7 @@ flavor = "ssc.xsmall"
 private_net = "UPPMAX 2021/1-5 Internal IPv4 Network"
 floating_ip_pool_name = None
 floating_ip = None
-image_name = "ubuntu 18.04"
+image_name = "Ubuntu 20.04 - 2021.03.23"
 
 loader = loading.get_plugin_loader('password')
 

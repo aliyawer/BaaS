@@ -7,7 +7,6 @@ byobu_default: system
 runcmd:
   - sudo bash
   - apt-get update
-  - apt-get -y upgrade
   - apt-get install -y git 
   - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
   - add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
@@ -16,5 +15,3 @@ runcmd:
   - chmod +x /usr/local/bin/docker-compose
   - cd /home/ubuntu
   - git clone https://github.com/aliyawer/BaaS.git
-  - cd BaaS/producer
-  - docker-compose up --build
