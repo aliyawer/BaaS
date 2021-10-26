@@ -2,13 +2,17 @@
 from celery import Celery
 from oct2py import Oct2Py
 from flask import Flask
-
+import celery-config
 
 app = Flask(__name__)
 
-celery = Celery('worker',
-                broker="amqp://admin:admin@192.168.2.189:5672/vhost",
-                backend="rpc://")
+celery = Celery('worker', 
+                 backend="rpc://")
+celery.config_from_object(celery-config)
+    
+    #'worker',
+    #            broker="amqp://admin:admin@192.168.2.189:5672/vhost",
+    #            backend="rpc://")
 
 
 @app.route('/baas', methods=['GET'])
