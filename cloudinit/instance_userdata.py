@@ -40,9 +40,9 @@ if private_net != None:
 else:
     sys.exit("private-net not defined.")
 
-secgroups = ['BaaS-security-group', 'default']
+secgroups = ['default', 'BaaS-security-group']
 
-
+'''
 #print("Path at terminal when executing this file")
 #print(os.getcwd() + "\n")
 cfg_file_path = os.getcwd()+'/cloud-config-producer.txt'
@@ -66,9 +66,9 @@ while inst_status == 'BUILD':
     inst_status = instance.status
 
 print("Instance: " + instance.name + " is in " + inst_status + "state")
+'''
 
-
-for i in range(0):
+for i in range(3):
     cfg_file_path = os.getcwd()+'/cloud-config-worker.txt'
     if os.path.isfile(cfg_file_path):
         userdata = open(cfg_file_path)
