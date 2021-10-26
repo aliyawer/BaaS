@@ -1,4 +1,4 @@
-FROM python:3.8
+FROM ubuntu
 
 WORKDIR /app/
 COPY ./BENCHOP ./BENCHOP
