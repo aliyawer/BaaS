@@ -7,7 +7,7 @@ from flask import Flask
 app = Flask(__name__)
 
 celery = Celery('worker',
-                broker="amqp://admin:admin@130.238.28.178:5672/vhost",
+                broker="amqp://admin:admin@192.168.2.189:5672/vhost",
                 backend="rpc://")
 
 

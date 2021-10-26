@@ -3,10 +3,11 @@ FROM ubuntu
 WORKDIR /app/
 COPY ./BENCHOP ./BENCHOP
 COPY requirements.txt .
-RUN apt-add-repository ppa:octave/stable
 RUN apt-get update
+ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get install -y octave
-RUN python3 -m pip install --upgrade pip
+ARG DEBIAN_FRONTEND=interactive
+RUN apt-get install -y python3-pip
 RUN pip3 install -r requirements.txt
 COPY . .
 
