@@ -1,7 +1,7 @@
 FROM python:3.8
 
 WORKDIR /app/
-COPY ../BENCHOP ./BENCHOP
+COPY ./BENCHOP ./BENCHOP
 COPY requirements.txt .
 RUN apt-get update
 RUN apt-get install -y octave

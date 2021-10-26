@@ -1,7 +1,7 @@
 FROM ubuntu
 
 WORKDIR /app/
-COPY ../BENCHOP ./BENCHOP
+COPY ./BENCHOP ./BENCHOP
 COPY requirements.txt .
 RUN apt-add-repository ppa:octave/stable
 RUN apt-get update
