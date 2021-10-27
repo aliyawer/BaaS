@@ -23,7 +23,7 @@ resource "openstack_compute_instance_v2" "BaaS-terraform-producer" {
   name            = "BaaS-terraform-producer"
   image_name      = "Ubuntu 18.04"
   flavor_name     = "ssc.medium"
-  key_pair        = "myKey"
+  key_pair        = var.key_pair
   security_groups = ["default", "BaaS-security-group"]
   user_data = file("cloudinit/cloud-config-producer.txt")
 
@@ -47,7 +47,7 @@ resource "openstack_compute_instance_v2" "BaaS-terraform-worker" {
   name            = "BaaS-terraform-worker"
   image_name      = "Ubuntu 18.04"
   flavor_name     = "ssc.medium"
-  key_pair        = "myKey"
+  key_pair        = var.key_pair
   security_groups = ["default", "BaaS-security-group"]
   user_data = file("cloudinit/cloud-config-worker.txt")
 
@@ -80,7 +80,6 @@ resource "null_resource" "set_celery_broker_of_worker" {
   connection {
     user = "ubuntu"
     host = openstack_compute_floatingip_associate_v2.floatip_2.floating_ip
-    private_key = var.key_info
   }
   provisioner "remote-exec" {
     inline = [
