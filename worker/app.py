@@ -2,13 +2,12 @@
 from celery import Celery
 from oct2py import Oct2Py
 from flask import Flask
-import celeryconfig
 
 app = Flask(__name__)
 
 celery = Celery('worker',
                  backend="rpc://")
-celery.config_from_object(celeryconfig)
+celery.config_from_object('celeryconfig')
 
 
 @app.route('/baas', methods=['GET'])
