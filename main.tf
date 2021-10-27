@@ -84,7 +84,7 @@ resource "null_resource" "set_celery_broker_of_worker" {
   }
   provisioner "remote-exec" {
     inline = [
-      "echo \"broker_url = 'amqp://admin:admin@${openstack_compute_instance_v2.BaaS-terraform-producer.access_ip_v4}:5672/vhost\'" > /home/ubuntu/celeryconfig.py",
+      "echo \"broker_url = 'amqp://admin:admin@\"${openstack_compute_instance_v2.BaaS-terraform-producer.access_ip_v4}\":5672/vhost'\" > /home/ubuntu/celeryconfig.py",
     ]
   }
 } 
