@@ -20,7 +20,7 @@ provider "openstack" {
 
 # Producer instance
 resource "openstack_compute_instance_v2" "BaaS-terraform-producer" {
-  name            = "BaaS-terraform-producer"
+  name            = "BaaS-terraform-lovvv-producer"
   image_name      = "Ubuntu 18.04"
   flavor_name     = "ssc.medium"
   key_pair        = var.key_pair
@@ -32,19 +32,19 @@ resource "openstack_compute_instance_v2" "BaaS-terraform-producer" {
   }
 }
 
-resource "openstack_networking_floatingip_v2" "floatip_1" {
+resource "openstack_networking_floatingip_v2" "producer_floatingip" {
   pool = "Public External IPv4 Network"
 }
 
-resource "openstack_compute_floatingip_associate_v2" "floatip_1" {
-  floating_ip = "${openstack_networking_floatingip_v2.floatip_1.address}"
+resource "openstack_compute_floatingip_associate_v2" "producer_floatingip" {
+  floating_ip = "${openstack_networking_floatingip_v2.producer_floatingip.address}"
   instance_id = "${openstack_compute_instance_v2.BaaS-terraform-producer.id}"
 }
 
 
 # Worker instance
 resource "openstack_compute_instance_v2" "BaaS-terraform-worker" {
-  name            = "BaaS-terraform-worker"
+  name            = "BaaS-terraform-lovvv-worker"
   image_name      = "Ubuntu 18.04"
   flavor_name     = "ssc.medium"
   key_pair        = var.key_pair
@@ -60,30 +60,31 @@ resource "openstack_compute_instance_v2" "BaaS-terraform-worker" {
   ]
 }
 
-resource "openstack_networking_floatingip_v2" "floatip_2" {
+resource "openstack_networking_floatingip_v2" "worker_floatingip" {
   pool = "Public External IPv4 Network"
 }
 
-resource "openstack_compute_floatingip_associate_v2" "floatip_2" {
-  floating_ip = "${openstack_networking_floatingip_v2.floatip_2.address}"
+resource "openstack_compute_floatingip_associate_v2" "worker_floatingip" {
+  floating_ip = "${openstack_networking_floatingip_v2.worker_floatingip.address}"
   instance_id = "${openstack_compute_instance_v2.BaaS-terraform-worker.id}"
 }
 
 # Set ip of producer to celery worker of worker
 resource "null_resource" "set_celery_broker_of_worker" {
   depends_on = [
-    openstack_compute_floatingip_associate_v2.floatip_1,
-    openstack_compute_floatingip_associate_v2.floatip_2,
+    openstack_compute_floatingip_associate_v2.producer_floatingip,
+    openstack_compute_floatingip_associate_v2.worker_floatingip,
     openstack_compute_instance_v2.BaaS-terraform-producer,
     openstack_compute_instance_v2.BaaS-terraform-worker,
   ]
   connection {
     user = "ubuntu"
-    host = openstack_compute_floatingip_associate_v2.floatip_2.floating_ip
+    host = openstack_compute_floatingip_associate_v2.worker_floatingip.floating_ip
+    private_key = file("../myKey")
   }
   provisioner "remote-exec" {
     inline = [
-      "echo \"broker_url = 'amqp://admin:admin@'${openstack_compute_instance_v2.BaaS-terraform-producer.access_ip_v4}':5672/vhost\" > /home/ubuntu/BaaS/worker/celery-config.py",
+      "echo \"broker_url = 'amqp://admin:admin@${openstack_compute_instance_v2.BaaS-terraform-producer.access_ip_v4}:5672/vhost\" > /home/ubuntu/celeryconfig.py",
     ]
   }
 } 
