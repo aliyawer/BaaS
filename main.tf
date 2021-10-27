@@ -76,11 +76,11 @@ resource "null_resource" "set_celery_broker_of_worker" {
     openstack_compute_floatingip_associate_v2.floatip_2,
     openstack_compute_instance_v2.BaaS-terraform-producer,
     openstack_compute_instance_v2.BaaS-terraform-worker,
-
   ]
   connection {
     user = "ubuntu"
     host = openstack_compute_floatingip_associate_v2.floatip_2.floating_ip
+    private_key = var.key_info
   }
   provisioner "remote-exec" {
     inline = [
