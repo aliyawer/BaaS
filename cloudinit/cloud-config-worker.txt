@@ -15,5 +15,6 @@ runcmd:
   - chmod +x /usr/local/bin/docker-compose
   - cd /home/ubuntu
   - git clone https://github.com/aliyawer/BaaS.git
+  - mv celeryconfig.py BaaS/worker
   - cd BaaS/worker
   - docker-compose up --build
