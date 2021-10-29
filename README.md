@@ -9,3 +9,4 @@ BENCHOP as a service.
 5) Then run the following commands
 - terraform init
 - terraform apply -var-file="secret.tfvars"
+
