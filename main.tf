@@ -20,7 +20,7 @@ provider "openstack" {
 
 # Producer instance
 resource "openstack_compute_instance_v2" "BaaS-terraform-producer" {
-  name            = "BaaS-terraform-lovvv-producer"
+  name            = "BaaS-terraform-producer"
   image_name      = "Ubuntu 18.04"
   flavor_name     = "ssc.medium"
   key_pair        = var.key_pair
@@ -41,10 +41,9 @@ resource "openstack_compute_floatingip_associate_v2" "producer_floatingip" {
   instance_id = "${openstack_compute_instance_v2.BaaS-terraform-producer.id}"
 }
 
-
 # Worker instance
 resource "openstack_compute_instance_v2" "BaaS-terraform-worker" {
-  name            = "BaaS-terraform-lovvv-worker"
+  name            = "BaaS-terraform-worker"
   image_name      = "Ubuntu 18.04"
   flavor_name     = "ssc.medium"
   key_pair        = var.key_pair
@@ -80,7 +79,7 @@ resource "null_resource" "set_celery_broker_of_worker" {
   connection {
     user = "ubuntu"
     host = openstack_compute_floatingip_associate_v2.worker_floatingip.floating_ip
-    private_key = file("../myKey")
+    private_key = file("myKey")
   }
   provisioner "remote-exec" {
     inline = [

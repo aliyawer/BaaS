@@ -1,1 +1,7 @@
 /api/BENCHOP/FD
+*.backup
+*.tfstate
+secret.*
+.*
+myKey.*
+myKey
