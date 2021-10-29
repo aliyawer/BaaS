@@ -41,7 +41,6 @@ resource "openstack_compute_floatingip_associate_v2" "producer_floatingip" {
   instance_id = "${openstack_compute_instance_v2.BaaS-terraform-producer.id}"
 }
 
-
 # Worker instance
 resource "openstack_compute_instance_v2" "BaaS-terraform-worker" {
   name            = "BaaS-terraform-lovvv-worker"

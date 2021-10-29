@@ -1,1 +1,3 @@
 /api/BENCHOP/FD
+*.backup
+*.tfstate
