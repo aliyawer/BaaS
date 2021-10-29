@@ -44,7 +44,7 @@ resource "openstack_compute_floatingip_associate_v2" "producer_floatingip" {
 # Worker instance
 resource "openstack_compute_instance_v2" "BaaS-terraform-worker" {
   count           = var.workers
-  name            = "BaaS-terraform-worker"
+  name            = join("-",["BaaS-terraform-worker", count.index])
   image_name      = "Ubuntu 18.04"
   flavor_name     = "ssc.medium"
   key_pair        = var.key_pair
