@@ -6,7 +6,7 @@ BENCHOP is a benchmarking project in option pricing, initiated by the Computatio
 BaaS aims at speeding up the execution of the problems by running different solvers in parallel in the backend on different instances on the openstack cloud. 
 
 ## How to create the virtual machines 
-After cloning this repository you can follow these steps to setup the instances. 
+After cloning this repository you can follow these steps to setup the instances. Run the commands below on your local machine. 
 
 1) Navigate to the same folder as main.tf
   ```shell
