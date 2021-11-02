@@ -21,6 +21,6 @@ After completion the service can be reached by entering the following in a brows
   
   The celery workers can be seen by entering the following, again you have to exchange the "<ip-address>".
   
-  '''shell
+```shell
   http://<ip-address>:5555
-  '''
+```
