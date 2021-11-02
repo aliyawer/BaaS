@@ -6,15 +6,17 @@ BENCHOP is a benchmarking project in option pricing, initiated by the Computatio
 BaaS aims at speeding up the execution of the problems by running different solvers in parallel in the backend on different instances on the openstack cloud. 
 
 ## How to create the virtual machines 
+After cloning this repository you can follow these steps to setup the instances. 
+
 1) Navigate to the same folder as main.tf
   ```shell
   cd BaaS
   ```
-2) Generate a key pair by running the following command and name it `myKey`
+2) Generate a key pair by running the following command and name it `myKey`.
   ```shell
   ssh-keygen -b 2048 -t rsa
   ```
-3) Create a file called `secret.tfvars` and add key_pair = "myKey"
+3) Create a file called `secret.tfvars` and add key_pair = "myKey". The following should be the content of the `secret.tfvars` file.
   ```shell
   key_pair = "myKey"
   ```
@@ -23,7 +25,7 @@ BaaS aims at speeding up the execution of the problems by running different solv
   source <project_name>.openrc.sh
   ```
 5) Install Terraform. Look at the following link to see instruction on how to install it on your OS: https://learn.hashicorp.com/tutorials/terraform/install-cli
-6) Then run the following commands
+6) Then run the following commands to start the instances with terraform. Replacing `Number of workers` with an actual integer value. 
   ```shell
   terraform init
   terraform apply -var-file="secret.tfvars" -var="workers=Number of workers"
@@ -42,4 +44,10 @@ After the virtual machines has been initialized the service can be reached by en
   
 ```shell
   http://<ip-address>:5555
+```
+
+## Delete the instances
+To take down the instances when you are done, you can run the following command.
+```shell
+terraform destroy -var-file="secret.tfvars"
 ```
