@@ -16,16 +16,14 @@ def baas_project():
     res_1 = task_1.delay()
     res_2 = task_2.delay()
     res_3 = task_3.delay()
-    res_4 = task_4.delay()
+    #res_4 = task_4.delay()
     res_5 = task_5.delay()
-    res_6 = task_6.delay()
+    #res_6 = task_6.delay()
     res = {
         "res_1": res_1.get(),
         "res_2": res_2.get(),
         "res_3": res_3.get(),
-        "res_4": res_4.get(),
         "res_5": res_5.get(),
-        "res_6": res_6.get()
     }
     return res
 
