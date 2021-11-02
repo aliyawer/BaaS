@@ -8,4 +8,4 @@ BENCHOP as a service.
 4) Source the openstack resource file <project_name>.openrc.sh
 5) Then run the following commands
 - terraform init
-- terraform apply -var-file="secret.tfvars"
+- terraform apply -var-file="secret.tfvars" -var="workers=Number of workers"

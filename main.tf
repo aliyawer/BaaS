@@ -43,12 +43,13 @@ resource "openstack_compute_floatingip_associate_v2" "producer_floatingip" {
 
 # Worker instance
 resource "openstack_compute_instance_v2" "BaaS-terraform-worker" {
-  name            = "BaaS-terraform-worker"
+  count           = var.workers
+  name            = join("-",["BaaS-terraform-worker", count.index])
   image_name      = "Ubuntu 18.04"
   flavor_name     = "ssc.medium"
   key_pair        = var.key_pair
   security_groups = ["default", "BaaS-security-group"]
-  user_data = file("cloudinit/cloud-config-worker.txt")
+  user_data       = file("cloudinit/cloud-config-worker.txt")
 
   network {
     name = "UPPMAX 2021/1-5 Internal IPv4 Network"
@@ -60,16 +61,19 @@ resource "openstack_compute_instance_v2" "BaaS-terraform-worker" {
 }
 
 resource "openstack_networking_floatingip_v2" "worker_floatingip" {
-  pool = "Public External IPv4 Network"
+  pool  = "Public External IPv4 Network"
+  count = var.workers
 }
 
 resource "openstack_compute_floatingip_associate_v2" "worker_floatingip" {
-  floating_ip = "${openstack_networking_floatingip_v2.worker_floatingip.address}"
-  instance_id = "${openstack_compute_instance_v2.BaaS-terraform-worker.id}"
+  count       = var.workers
+  floating_ip = "${openstack_networking_floatingip_v2.worker_floatingip[count.index].address}"
+  instance_id = "${openstack_compute_instance_v2.BaaS-terraform-worker[count.index].id}"
 }
 
 # Set ip of producer to celery worker of worker
 resource "null_resource" "set_celery_broker_of_worker" {
+  count      = var.workers
   depends_on = [
     openstack_compute_floatingip_associate_v2.producer_floatingip,
     openstack_compute_floatingip_associate_v2.worker_floatingip,
@@ -78,7 +82,7 @@ resource "null_resource" "set_celery_broker_of_worker" {
   ]
   connection {
     user = "ubuntu"
-    host = openstack_compute_floatingip_associate_v2.worker_floatingip.floating_ip
+    host = openstack_compute_floatingip_associate_v2.worker_floatingip[count.index].floating_ip
     private_key = file("myKey")
   }
   provisioner "remote-exec" {
