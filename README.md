@@ -15,9 +15,9 @@ The initialization may take at least 30 minutes to complete.
 ## Usage
 After completion the service can be reached by entering the following in a browser, exchanging "<ip-address>" with the actual floating ip address of the producer instance.
   
-'''shell
+```shell
   http://<ip-address>:5000/baas
-'''
+```
   
   The celery workers can be seen by entering the following, again you have to exchange the "<ip-address>".
   
